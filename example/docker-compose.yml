@@ -37,11 +37,12 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES: 2
-      - SPARK_WORKER_MEMORY: 2g
-      - SPARK_WORKER_PORT: 8881
-      - SPARK_WORKER_WEBUI_PORT: 8081
-      - SPARK_PUBLIC_DNS: localhost
+      - SPARK_CONF_DIR=/conf      
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=2g
+      - SPARK_WORKER_PORT=8881
+      - SPARK_WORKER_WEBUI_PORT=8081
+      - SPARK_PUBLIC_DNS=localhost
     expose:
       - 8881
       - 8081     
@@ -50,6 +51,7 @@ services:
     env_file:
       - ./hadoop.env
     volumes:
+      - ./conf/worker1:/conf      
       - ./data/worker1:/tmp/data   
       
       
