@@ -5,7 +5,7 @@ docker-compose -f docker-compose-hive.yml up -d datanode hive-metastore
 docker-compose -f docker-compose-hive.yml up -d hive-server
 docker-compose -f docker-compose-hive.yml up -d spark-master spark-worker spark-notebook hue
 
-my_ip=`ip route get 1|awk '{print $NF;exit}'`
+my_ip=`curl ifconfig.me/ip`
 echo "Namenode: http://${my_ip}:50070"
 echo "Datanode: http://${my_ip}:50075"
 echo "Spark-master: http://${my_ip}:8080"
