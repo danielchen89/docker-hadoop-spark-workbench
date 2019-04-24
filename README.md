@@ -21,7 +21,7 @@ docker-compose -f docker-compose-hive.yml up -d spark-master spark-worker spark-
 
 ## Interfaces
 
-my_ip=`curl ifconfig.me/ip`
+  my_ip=`curl ifconfig.me/ip`
 * Namenode: http://my_ip:50070
 * Datanode: http://my_ip:50075
 * Spark-master: http://my_ip:8080
