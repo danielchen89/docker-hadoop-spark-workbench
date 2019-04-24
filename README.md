@@ -21,11 +21,12 @@ docker-compose -f docker-compose-hive.yml up -d spark-master spark-worker spark-
 
 ## Interfaces
 
-* Namenode: http://localhost:50070
-* Datanode: http://localhost:50075
-* Spark-master: http://localhost:8080
-* Spark-notebook: http://localhost:9001
-* Hue (HDFS Filebrowser): http://localhost:8088/home
+my_ip=`curl ifconfig.me/ip`
+* Namenode: http://my_ip:50070
+* Datanode: http://my_ip:50075
+* Spark-master: http://my_ip:8080
+* Spark-notebook: http://my_ip:9001
+* Hue (HDFS Filebrowser): http://my_ip:8088/home
 
 ## Important
 
