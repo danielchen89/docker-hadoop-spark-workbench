@@ -11,8 +11,10 @@ services:
       - ./hadoop.env
     ports:
       - 50070:50070
+      
   datanode:
     image: bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8
+    container_name: datanode    
     depends_on: 
       - namenode
     volumes:
@@ -21,6 +23,7 @@ services:
       - ./hadoop.env
     ports:
       - 50075:50075
+      
   spark-master:
     image: bde2020/spark-master:2.1.0-hadoop2.8-hive-java8
     container_name: spark-master
@@ -54,6 +57,53 @@ services:
       - ./conf/worker1:/conf      
       - ./data/worker1:/tmp/data   
       
+  spark-worker2:
+    image: bde2020/spark-worker:2.1.0-hadoop2.8-hive-java8
+    container_name: worker2    
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_CONF_DIR=/conf      
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=2g
+      - SPARK_WORKER_PORT=8882
+      - SPARK_WORKER_WEBUI_PORT=8082
+      - SPARK_PUBLIC_DNS=localhost
+    expose:
+      - 8882
+      - 8082     
+    ports:      
+      - 8082:8082
+    env_file:
+      - ./hadoop.env
+    volumes:
+      - ./conf/worker2:/conf      
+      - ./data/worker2:/tmp/data
+  
+  spark-worker3:
+    image: bde2020/spark-worker:2.1.0-hadoop2.8-hive-java8
+    container_name: worker3    
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_CONF_DIR=/conf      
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=2g
+      - SPARK_WORKER_PORT=8883
+      - SPARK_WORKER_WEBUI_PORT=8083
+      - SPARK_PUBLIC_DNS=localhost
+    expose:
+      - 8883
+      - 8083     
+    ports:      
+      - 8083:8083
+    env_file:
+      - ./hadoop.env
+    volumes:
+      - ./conf/worker3:/conf      
+      - ./data/worker3:/tmp/data
       
   spark-notebook:
     image: bde2020/spark-notebook:2.1.0-hadoop2.8-hive
@@ -62,8 +112,10 @@ services:
       - ./hadoop.env
     ports:
       - 9001:9001
+      
   hue:
     image: bde2020/hdfs-filebrowser:3.11
+    container_name: hue    
     ports:
       - 8088:8088
     environment:
